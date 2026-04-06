@@ -8,7 +8,7 @@ app.use(cors());
 
 // index.js
 // Универсальный маршрут: GET /api/levels/7x7/random
-app.get('/api/levels/:mode/random', (req, res) => {
+app.get('/crosswordle/api/levels/:mode/random', (req, res) => {
     try {
         const mode = req.params.mode; // Получаем '7x7' или '9x9' из URL
         const filePath = path.join(__dirname, 'levels.json');
@@ -39,7 +39,7 @@ app.get('/api/levels/:mode/random', (req, res) => {
 app.use(express.json()); // Чтобы сервер понимал JSON в POST-запросах
 
 // Сохранение/Обновление уровня
-app.post('/api/levels', (req, res) => {
+app.post('/crosswordle/api/levels', (req, res) => {
     const newLevel = req.body;
     const filePath = path.join(__dirname, 'levels.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -60,7 +60,7 @@ app.post('/api/levels', (req, res) => {
 });
 
 // Удаление уровня
-app.delete('/api/levels/:mode/:id', (req, res) => {
+app.delete('/crosswordle/api/levels/:mode/:id', (req, res) => {
     const { mode, id } = req.params;
     const filePath = path.join(__dirname, 'levels.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -71,12 +71,12 @@ app.delete('/api/levels/:mode/:id', (req, res) => {
 });
 
 // Получить список всех уровней (для списка в админке)
-app.get('/api/admin/levels', (req, res) => {
+app.get('/crosswordle/api/admin/levels', (req, res) => {
     const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'levels.json'), 'utf8'));
     res.json(data.modes);
 });
 
-app.get('/api/levels/:mode/id/:id', (req, res) => {
+app.get('/crosswordle/api/levels/:mode/id/:id', (req, res) => {
     const { mode, id } = req.params;
     const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'levels.json'), 'utf8'));
     const level = data.modes[mode]?.find(l => String(l.id) === String(id));
