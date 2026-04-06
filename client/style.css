@@ -209,12 +209,35 @@ body {
 
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 600px) {
+    /* Уменьшаем верхний отступ всей страницы */
+    body {
+        padding-top: 5px;
+    }
+
+    /* Делаем переключатель режимов компактнее */
+    .mode-selector {
+        margin-bottom: 15px; /* Было 30px */
+    }
+
+    /* Уменьшаем отступы кнопок управления */
+    .game-controls {
+        margin-bottom: 10px; /* Было 20px */
+    }
+
+    /* Сжимаем саму сетку */
     #grid {
-        width: 95vw;
-        gap: 3px; /* Чуть меньше отступы на мобилках */
+        gap: 2px !important; /* Минимальный зазор для 9х9 */
+        padding: 5px;
     }
 
     .cell {
-        font-size: 18px; /* Уменьшаем шрифт, чтобы буквы не вылезали */
+        font-size: 16px; /* Уменьшаем шрифт для режима 9х9 */
+        border-radius: 2px;
+    }
+
+    /* Уменьшаем размер текста таймера и счетчика ходов */
+    #timer, #moves-count, #status {
+        font-size: 14px;
+        margin: 5px 0;
     }
 }
