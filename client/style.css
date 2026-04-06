@@ -43,24 +43,19 @@ body {
 
 /* Сетка (как на Снимок.PNG) */
 #grid {
-    display: grid;
-    gap: 4px;
-    padding: 10px;
+    width: 100%;       /* Сетка занимает всю ширину контейнера */
+    max-width: 500px;  /* Но не становится слишком огромной на десктопе */
+    margin: 0 auto;    /* Центрируем */
+    gap: 4px;          /* Небольшой отступ между ячейками */
 }
 
 .cell {
-    width: 55px;
-    height: 55px;
+    width: 100%;       /* Ячейка занимает всю ширину своей колонки 1fr */
+    aspect-ratio: 1 / 1; /* ГЛАВНОЕ: делает ячейку идеально квадратной */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    font-weight: 800;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.1s;
+    /* Убедись, что нет жесткого width: 60px здесь */
 }
 
 .cell:active { transform: scale(0.9); }

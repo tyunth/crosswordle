@@ -74,6 +74,7 @@ async function changeMode(mode, dailyFlag) {
 async function initGame() {
     const statusElem = document.getElementById('status');
     const grid = document.getElementById('grid');
+	
     const dailyId = isDaily ? getDailyTargetId(currentMode) : null;
     
     if (isDaily) {
@@ -135,7 +136,7 @@ function renderGrid() {
 
     grid.innerHTML = '';
     const cols = levelData.gridSize.cols;
-    grid.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
+    grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
     levelData.solution.forEach((cell, index) => {
         const div = document.createElement('div');
