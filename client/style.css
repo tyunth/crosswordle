@@ -41,21 +41,27 @@ body {
     color: white;
 }
 
-/* Сетка (как на Снимок.PNG) */
+
 #grid {
-    width: 100%;       /* Сетка занимает всю ширину контейнера */
-    max-width: 500px;  /* Но не становится слишком огромной на десктопе */
-    margin: 0 auto;    /* Центрируем */
-    gap: 4px;          /* Небольшой отступ между ячейками */
+    display: grid;     /* ОБЯЗАТЕЛЬНО: это включает сетку */
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 4px;          
 }
 
 .cell {
-    width: 100%;       /* Ячейка занимает всю ширину своей колонки 1fr */
-    aspect-ratio: 1 / 1; /* ГЛАВНОЕ: делает ячейку идеально квадратной */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Делает ячейки квадратными автоматически */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Убедись, что нет жесткого width: 60px здесь */
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    transition: transform 0.1s;
 }
 
 .cell:active { transform: scale(0.9); }
@@ -203,23 +209,12 @@ body {
 
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 600px) {
-    #grid, #admin-grid {
-        /* Уменьшаем размер ячеек, чтобы они влезали в экран */
-        grid-template-columns: repeat(var(--grid-size, 7), 1fr) !important; 
-        width: 95vw; /* Занимаем почти всю ширину экрана */
-        max-width: 400px;
-        gap: 6px; /* Уменьшаем зазоры */
-        padding: 10px;
-        margin: 0 auto; /* Центрируем */
+    #grid {
+        width: 95vw;
+        gap: 3px; /* Чуть меньше отступы на мобилках */
     }
 
     .cell {
-        width: auto !important; /* Разрешаем ячейке сжиматься */
-        height: calc(95vw / var(--grid-size, 7) - 10px); /* Делаем ячейки квадратными */
-        font-size: 20px; /* Уменьшаем шрифт для мобилок */
-    }
-
-    .edit-input {
-        font-size: 20px;
+        font-size: 18px; /* Уменьшаем шрифт, чтобы буквы не вылезали */
     }
 }

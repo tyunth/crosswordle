@@ -137,6 +137,7 @@ function renderGrid() {
     grid.innerHTML = '';
     const cols = levelData.gridSize.cols;
     grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    grid.style.setProperty('--grid-size', cols);
 
     levelData.solution.forEach((cell, index) => {
         const div = document.createElement('div');
