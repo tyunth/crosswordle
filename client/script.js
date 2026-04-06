@@ -97,15 +97,15 @@ async function initGame() {
         let response;
         if (isDaily) {
             // Пытаемся загрузить ежедневный
-            response = await fetch(`http://localhost:3001/api/levels/${currentMode}/id/${dailyId}`);
+            response = await fetch(`/crosswordle/api/levels/${currentMode}/id/${dailyId}`);
             
             // Если ежедневный не найден (404), загружаем случайный как запасной вариант
             if (response.status === 404) {
                 console.warn(`Пазл ${dailyId} не найден, загружаю случайный...`);
-                response = await fetch(`http://localhost:3001/api/levels/${currentMode}/random`);
+                response = await fetch(`/crosswordle/api/levels/${currentMode}/random`);
             }
         } else {
-            response = await fetch(`http://localhost:3001/api/levels/${currentMode}/random`);
+            response = await fetch(`/crosswordle/api/levels/${currentMode}/random`);
         }
 
         if (!response.ok) throw new Error("Ошибка сервера");

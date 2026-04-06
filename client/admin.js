@@ -164,7 +164,7 @@ async function saveToServer() {
     currentLevelData.id = idInput ? idInput : Date.now();
 
     try {
-        const response = await fetch('http://localhost:3001/api/levels', {
+        const response = await fetch('/crosswordle/api/levels', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(currentLevelData)
@@ -183,13 +183,13 @@ async function saveToServer() {
 
 async function deleteLevel(mode, id) {
     if (!confirm("Точно удалить?")) return;
-    await fetch(`http://localhost:3001/api/levels/${mode}/${id}`, { method: 'DELETE' });
+    await fetch(`/crosswordle/api/levels/${mode}/${id}`, { method: 'DELETE' });
     loadLevelList();
 }
 
 
 async function loadLevelList() {
-    const res = await fetch('http://localhost:3001/api/admin/levels');
+    const res = await fetch('/crosswordle/api/admin/levels');
     const modes = await res.json();
     const list = document.getElementById('level-list');
     list.innerHTML = '';
