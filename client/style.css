@@ -209,35 +209,56 @@ body {
 
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 600px) {
-    /* Уменьшаем верхний отступ всей страницы */
     body {
-        padding-top: 5px;
+        padding-top: 5px; /* Уменьшили с 20px */
     }
 
-    /* Делаем переключатель режимов компактнее */
+    /* Сжимаем переключатель режимов */
     .mode-selector {
-        margin-bottom: 15px; /* Было 30px */
+        margin-bottom: 10px; /* Уменьшили с 30px */
+        gap: 5px;
+        padding: 3px;
+    }
+    .mode-btn {
+        padding: 6px 10px;
+        font-size: 11px;
     }
 
-    /* Уменьшаем отступы кнопок управления */
+    /* Убираем лишнее место у статуса и таймера */
+    #status {
+        min-height: 0 !important; /* Было 20px */
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+    #timer {
+        margin-bottom: 8px !important; /* Было 15px */
+        font-size: 14px;
+    }
+
+    /* Кнопки управления */
     .game-controls {
-        margin-bottom: 10px; /* Было 20px */
+        margin-bottom: 8px; /* Было 20px */
+        gap: 5px;
+    }
+    .control-btn {
+        padding: 6px 10px;
+        font-size: 12px;
     }
 
-    /* Сжимаем саму сетку */
+    /* Сетка: для 9х9 уменьшаем ширину, чтобы уменьшилась и высота */
     #grid {
-        gap: 2px !important; /* Минимальный зазор для 9х9 */
-        padding: 5px;
+        width: 85vw; /* Было 95vw, уменьшение на 10% спасает от скролла */
+        gap: 2px !important;
+        margin-top: 5px;
     }
 
     .cell {
-        font-size: 16px; /* Уменьшаем шрифт для режима 9х9 */
-        border-radius: 2px;
+        font-size: 16px; /* Крупные буквы в маленьких клетках 9х9 не нужны */
     }
 
-    /* Уменьшаем размер текста таймера и счетчика ходов */
-    #timer, #moves-count, #status {
+    /* Счетчик ходов под сеткой */
+    #swaps-counter {
+        margin-top: 10px !important; /* Было 25px */
         font-size: 14px;
-        margin: 5px 0;
     }
 }
