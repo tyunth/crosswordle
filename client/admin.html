@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Crosswordle Admin PRO</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧩</text></svg>">
+    <style>
+        /* Глобальные правки для десктопа */
+        body { 
+            display: flex; 
+            flex-direction: row; 
+            align-items: flex-start; 
+            justify-content: flex-start; 
+            padding: 40px; 
+            gap: 50px; 
+            background: #f4f7f6;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Панель управления (слева) */
+        .admin-panel { 
+            width: 380px; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        /* Рабочая область (справа) */
+        .workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Исправленная сетка */
+        #admin-grid { 
+            background: #ffffff; 
+            padding: 20px; 
+            border-radius: 12px; 
+            display: grid; 
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            width: fit-content;
+            margin-top: 20px;
+        }
+
+        /* Квадратные ячейки */
+        .cell { 
+            width: 70px; 
+            height: 70px; 
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 0 0 2px #e0e0e0; /* Тонкая рамка внутри */
+        }
+
+        .edit-input { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            text-align: center; 
+            font-size: 32px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            background: transparent; 
+            color: #333; 
+            outline: none;
+        }
+
+        /* Состояния кнопок */
+        .controls-group { margin-bottom: 20px; }
+        .controls-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+        
+        select, input[type="number"] { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 16px;
+        }
+
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            margin-top: 10px; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            font-size: 15px;
+            transition: opacity 0.2s;
+        }
+        
+        .btn-primary { background: #4a90e2; color: white; }
+        .btn-success { background: #6aaa64; color: white; }
+        .btn-secondary { background: #b8bebf; color: #333; }
+
+        /* Список уровней */
+        #level-list { 
+            margin-top: 20px; 
+            max-height: 400px; 
+            overflow-y: auto; 
+            border-top: 1px solid #eee;
+        }
+        .level-item { 
+            padding: 12px; 
+            border-bottom: 1px solid #f9f9f9; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+		.size-btn {
+			background: #e2e8f0;
+			color: #64748b;
+			padding: 10px;
+			margin-top: 0;
+			border-radius: 8px;
+			flex: 1;
+		}
+		.size-btn.active {
+			background: #1e293b;
+			color: white;
+		}
+        .level-item:hover { background: #fcfcfc; }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1 style="margin-top:0; font-size: 24px;">Панель редактора</h1>
+        
+		<div class="controls-group">
+			<label>Размер кроссворда</label>
+			<div style="display: flex; gap: 10px;">
+				<button type="button" class="size-btn active" data-size="7" onclick="changeSize(7)">7 x 7</button>
+				<button type="button" class="size-btn" data-size="9" onclick="changeSize(9)">9 x 9</button>
+			</div>
+		</div>
+
+        <div class="controls-group">
+            <label>Лимит ходов</label>
+            <input type="number" id="moves-input" value="15">
+        </div>
+        <div>
+			<label>ID уровня:</label>
+			<input type="text" id="level-id" placeholder="Напр: 0504202677">
+			<button type="button" onclick="setTodayId()" class="control-btn">Сегодня</button>
+		</div>
+        <button id="btn-shuffle" class="btn-primary" onclick="prepareShuffle()">→ Перейти к перемешиванию</button>
+        <button id="btn-save" class="btn-success" onclick="saveToServer()" style="display:none;">✓ Сохранить в базу</button>
+        <button class="btn-secondary" onclick="resetToEdit()">✕ Сбросить всё</button>
+        
+        <div id="level-list-container">
+            <h3 style="margin-top: 30px;">Мои уровни</h3>
+            <div id="level-list">Загрузка данных...</div>
+        </div>
+    </div>
+
+    <div class="workspace">
+        <div id="admin-status" style="font-size: 18px; color: #888; margin-bottom: 10px;">
+            Режим: Редактирование решения
+        </div>
+        <div id="admin-grid"></div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

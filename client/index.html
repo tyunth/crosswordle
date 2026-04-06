@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crosswordle RU</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+</head>
+<body>
+
+    <div class="mode-selector">
+        <button id="btn-daily-7x7" class="mode-btn" onclick="setMode('7x7', true, this)">Daily 7x7</button>
+        <button id="btn-daily-9x9" class="mode-btn" onclick="setMode('9x9', true, this)">Daily 9x9</button>
+        <button id="btn-inf-7x7" class="mode-btn" onclick="setMode('7x7', false, this)">∞ 7x7</button>
+        <button id="btn-inf-9x9" class="mode-btn" onclick="setMode('9x9', false, this)">∞ 9x9</button>
+    </div>
+
+    <div id="status" style="margin-bottom: 5px; color: #787c7e; min-height: 20px;"></div>
+    <div id="timer" style="font-weight: bold; margin-bottom: 15px;">Время: 00:00</div>
+
+	<div class="game-controls">
+		<button id="btn-restart" class="control-btn" onclick="restartGame()">Начать заново</button>
+		<button id="btn-pause" class="control-btn" onclick="togglePause()">Пауза</button>
+		<button id="btn-giveup" class="control-btn" onclick="giveUp()">Сдаться</button>
+		<button id="btn-new-game" class="control-btn hidden" onclick="nextGame()">Новая игра</button>
+	</div>
+	
+
+    <div id="grid"></div>
+
+    <div id="swaps-counter" style="font-weight: 800; margin-top: 25px; text-transform: uppercase;">
+        ОСТАЛОСЬ ХОДОВ: <span id="moves-count">0</span>
+    </div>
+
+    <div id="pause-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; color:white; flex-direction:column; justify-content:center; align-items:center;">
+        <h1>ИГРА НА ПАУЗЕ</h1>
+        <button onclick="togglePause()" class="btn-main" style="margin-top: 20px;">ПРОДОЛЖИТЬ</button>
+    </div>
+
+    <div id="result-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <h2 id="modal-title">Попытки закончились! 😟</h2>
+            
+            <div class="stat-box">
+                <div class="stat-item"><b id="stat-streak">0</b><span>Серия побед</span></div>
+                <div class="stat-item"><b id="stat-played">0</b><span>Сыграно</span></div>
+                <div class="stat-item"><b id="stat-stars">0</b><span>Звезды</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function setMode(mode, isDaily, btn) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (typeof changeMode === 'function') changeMode(mode, isDaily);
+        }
+        function closeModal() { document.getElementById('result-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
